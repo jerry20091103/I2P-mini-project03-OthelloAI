@@ -227,7 +227,7 @@ public:
         return ss.str();
     }
 };
-
+//
 const std::string file_log = "gamelog.txt";
 const std::string file_state = "state";
 const std::string file_action = "action";

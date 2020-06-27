@@ -14,8 +14,9 @@
 int player;
 const int SIZE = 8;
 
-const int corner_value = 70;
-const int side_value = 10;
+const int corner_value = 300;
+const int side_value = 30;
+const int mobility_value = 1;
 
 struct Point
 {
@@ -240,6 +241,7 @@ public:
     {
         int black = 0;
         int white = 0;
+        // calculate disc count, corners, sides and mobility
         for (int i = 0; i < SIZE; i++)
         {
             for (int j = 0; j < SIZE; j++)
@@ -257,9 +259,14 @@ public:
                         }
                     }
                     // check sides
-                    if(i == 0 || i == SIZE-1 ||  j == 0 || j == SIZE-1)
+                    if (i == 0 || i == SIZE - 1 || j == 0 || j == SIZE - 1)
                         white += side_value;
-                    white++;
+                    if (disc_count[WHITE] + disc_count[BLACK] <= 44)
+                        white += 2;
+                    else if (disc_count[WHITE] + disc_count[BLACK] <= 51)
+                        white += 3;
+                    else
+                        white += 10;
                 }
                 else if (board[i][j] == BLACK)
                 {
@@ -273,10 +280,26 @@ public:
                         }
                     }
                     // check sides
-                    if(i == 0 || i == SIZE-1 ||  j == 0 || j == SIZE-1)
+                    if (i == 0 || i == SIZE - 1 || j == 0 || j == SIZE - 1)
                         black += side_value;
-                    black++;
+                    if (disc_count[WHITE] + disc_count[BLACK] <= 44)
+                        black += 2;
+                    else if (disc_count[WHITE] + disc_count[BLACK] <= 53)
+                        black += 3;
+                    else
+                        black += 10;
                 }
+               /* else if (board[i][j] == EMPTY)
+                {
+                    // calculate mobility
+                    if (is_spot_valid(Point(i, j)))
+                    {
+                        if (cur_player == WHITE)
+                            white += mobility_value;
+                        else if (cur_player == BLACK)
+                            black += mobility_value;
+                    }
+                }*/
             }
         }
         return black - white;

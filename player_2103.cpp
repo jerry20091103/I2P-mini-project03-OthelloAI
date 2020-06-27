@@ -14,8 +14,8 @@
 int player;
 const int SIZE = 8;
 
-const int corner_value = 30;
-const int side_value = 8;
+const int corner_value = 70;
+const int side_value = 10;
 
 struct Point
 {

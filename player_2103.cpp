@@ -360,7 +360,7 @@ void minimax_lddfs(std::ofstream &fout, OthelloBoard input)
         mode = true;
     if (player == 2) // white
         mode = false;
-    for (int i = 1; i < 64; i += 1)
+    for (int i = 2; i < 64; i += 1)
     {
         std::pair<Point, int> results;
         int alpha = INT_MIN;

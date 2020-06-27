@@ -239,9 +239,14 @@ void launch_executable(std::string filename) {
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     std::string command = "start /min " + filename + " " + file_state + " " + file_action;
      std::string kill;
-    if(filename == "./player_human")
+    if(filename == "./player_human") // added human play feature
     {
-        std::string kill = "timeout /t " + std::to_string(1) + " > NUL && taskkill /im " + filename + " > NUL 2>&1";
+        std::cout << "Pick a move : ";
+        Point p;
+        std::cin >> p.x >> p.y;
+        std::ofstream fout(file_action);
+        fout << p.x << " " << p.y;
+        fout.close();
     }
     else
     {
@@ -272,7 +277,12 @@ void launch_executable(std::string filename) {
     std::string command;
     if(filename == "./player_human")
     {
-        command = "gtimeout " + std::to_string(600) + "s " + filename + " " + file_state + " " + file_action;
+        std::cout << "Pick a move : ";
+        Point p;
+        std::cin >> p.x >> p.y;
+        std::ofstream fout(file_action);
+        fout << p.x << " " << p.y;
+        fout.close();
     }
     else
     {

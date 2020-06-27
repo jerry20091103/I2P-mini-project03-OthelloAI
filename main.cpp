@@ -232,7 +232,7 @@ const std::string file_log = "gamelog.txt";
 const std::string file_state = "state";
 const std::string file_action = "action";
 // Timeout is set to 10 when TA test your code.
-const int timeout = 1;
+const int timeout = 10;
 
 void launch_executable(std::string filename) {
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -275,11 +275,15 @@ int main(int argc, char** argv) {
         // Read action
         std::ifstream fin(file_action);
         Point p(-1, -1);
+        // debug
+        log << "output of : "<< player_filename[game.cur_player] << "\n";
         while (true) {
             int x, y;
             if (!(fin >> x)) break;
             if (!(fin >> y)) break;
             p.x = x; p.y = y;
+            // debug
+            log << p.x << "  " << p.y << "\n";
         }
         fin.close();
         // Reset action file
@@ -296,9 +300,12 @@ int main(int argc, char** argv) {
         data = game.encode_output();
         std::cout << data;
         log << data;
+        // debug
+        //char c;
+        //std::cin >> c;
     }
     log.close();
-    // Reset state file
+    // Reset state files
     if (remove(file_state.c_str()) != 0)
         std::cerr << "Error removing file: " << file_state << "\n";
     return 0;

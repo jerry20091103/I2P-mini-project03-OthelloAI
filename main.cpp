@@ -235,18 +235,49 @@ const std::string file_action = "action";
 const int timeout = 10;
 
 void launch_executable(std::string filename) {
+    
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     std::string command = "start /min " + filename + " " + file_state + " " + file_action;
-    std::string kill = "timeout /t " + std::to_string(timeout) + " > NUL && taskkill /im " + filename + " > NUL 2>&1";
+     std::string kill;
+    if(filename == "./player_human")
+    {
+        std::string kill = "timeout /t " + std::to_string(1) + " > NUL && taskkill /im " + filename + " > NUL 2>&1";
+    }
+    else
+    {
+        std::string kill = "timeout /t " + std::to_string(timeout) + " > NUL && taskkill /im " + filename + " > NUL 2>&1";
+    }
     system(command.c_str());
     system(kill.c_str());
 #elif __linux__
-    std::string command = "timeout " + std::to_string(timeout) + "s " + filename + " " + file_state + " " + file_action;
-    system(command.c_str());
+    std::string command;
+    if(filename == "./player_human")
+    {
+        std::cout << "Pick a move : ";
+        Point p;
+        std::cin >> p.x >> p.y;
+        std::ofstream fout(file_action);
+        fout << p.x << " " << p.y;
+        fout.close();
+    }
+    else
+    {
+        command = "timeout " + std::to_string(timeout) + "s " + filename + " " + file_state + " " + file_action;
+        system(command.c_str());
+    }
+    
 #elif __APPLE__
     // May require installing the command by:
     // brew install coreutils
-    std::string command = "gtimeout " + std::to_string(timeout) + "s " + filename + " " + file_state + " " + file_action;
+    std::string command;
+    if(filename == "./player_human")
+    {
+        command = "gtimeout " + std::to_string(600) + "s " + filename + " " + file_state + " " + file_action;
+    }
+    else
+    {
+        command = "gtimeout " + std::to_string(timeout) + "s " + filename + " " + file_state + " " + file_action;
+    }
     system(command.c_str());
 #endif
 }

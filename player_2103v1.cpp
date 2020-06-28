@@ -360,7 +360,7 @@ void minimax_lddfs(std::ofstream &fout, OthelloBoard input)
         mode = true;
     if (player == 2) // white
         mode = false;
-    for (int i = 3; i < 64; i += 1)
+    for (int i = 3; i < 64; i += 2)
     {
         std::pair<Point, int> results;
         int alpha = INT_MIN;
@@ -391,10 +391,10 @@ void minimax_lddfs(std::ofstream &fout, OthelloBoard input)
                 /*// debug
                 std::cout << "max , depth = " << i + 1 << "\n"
                           << results.second << "\n"
-                          << boards.first.encode_output();
+                          << boards.first.encode_output();*/
 
                 if (alpha >= beta) // alpha-beta pruning
-                    break;*/
+                    break;
             }
         }
         // min
@@ -442,12 +442,6 @@ int dls(OthelloBoard input, int limit, int alpha, int beta, bool maxplayer)
     }
     // find all next boards
     std::vector<OthelloBoard> next_board;
-    //if (visited.find(input) != visited.cend()) // if calculated before
-    //{
-    //    next_board = visited[input];
-    //}
-    //else // find next boards
-    //{
     std::vector<Point> next_move = input.get_valid_spots();
     next_move = input.get_valid_spots();
     for (auto i : next_move)
@@ -456,8 +450,6 @@ int dls(OthelloBoard input, int limit, int alpha, int beta, bool maxplayer)
         copy.put_disc(i);
         next_board.push_back(copy);
     }
-    //visited[input] = next_board;
-    //}
     // max
     if (maxplayer)
     {

@@ -289,7 +289,7 @@ public:
                     //else
                     //   black += 10;
                 }
-               /* else if (board[i][j] == EMPTY)
+                else if (board[i][j] == EMPTY)
                 {
                     // calculate mobility
                     if (is_spot_valid(Point(i, j)))
@@ -299,7 +299,7 @@ public:
                         else if (cur_player == BLACK)
                             black += mobility_value;
                     }
-                }*/
+                }
             }
         }
         return black - white;

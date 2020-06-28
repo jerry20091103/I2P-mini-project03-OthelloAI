@@ -263,7 +263,7 @@ public:
                         white += side_value;
                     if (disc_count[WHITE] + disc_count[BLACK] <= 44)
                         white += 2;
-                    else if (disc_count[WHITE] + disc_count[BLACK] <= 51)
+                    else if (disc_count[WHITE] + disc_count[BLACK] <= 53)
                         white += 3;
                     else
                         white += 10;
